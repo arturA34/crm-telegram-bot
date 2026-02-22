@@ -1,3 +1,5 @@
+from functools import lru_cache
+
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -39,5 +41,6 @@ class Settings(BaseSettings):
         return f"redis://{self.redis_host}:{self.redis_port}/{self.redis_db}"
 
 
+@lru_cache(maxsize=1)
 def get_settings() -> Settings:
     return Settings()

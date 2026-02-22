@@ -29,6 +29,7 @@ def create_dispatcher(
     dp.message.middleware(DatabaseMiddleware(session_factory))
     dp.callback_query.middleware(DatabaseMiddleware(session_factory))
     dp.message.middleware(AutoRegisterMiddleware())
+    dp.callback_query.middleware(AutoRegisterMiddleware())
 
     # Register routers
     dp.include_router(error_router)

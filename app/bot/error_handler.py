@@ -16,8 +16,10 @@ async def global_error_handler(event: ErrorEvent) -> bool:
         event.exception,
     )
 
-    # Try to notify the user that something went wrong
     update = event.update
+    if update is None:
+        return True
+
     message = None
     if update.message:
         message = update.message

@@ -2,7 +2,7 @@ import logging
 from typing import Any, Awaitable, Callable
 
 from aiogram import BaseMiddleware
-from aiogram.types import Message, TelegramObject
+from aiogram.types import TelegramObject
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.db.repositories.user import UserRepository
@@ -19,12 +19,12 @@ class AutoRegisterMiddleware(BaseMiddleware):
         event: TelegramObject,
         data: dict[str, Any],
     ) -> Any:
-        if not isinstance(event, Message) or event.from_user is None:
+        tg_user = getattr(event, "from_user", None)
+        if tg_user is None:
             return await handler(event, data)
 
         session: AsyncSession = data["session"]
         repo = UserRepository(session)
-        tg_user = event.from_user
 
         user = await repo.get_by_telegram_id(tg_user.id)
         if user is None:

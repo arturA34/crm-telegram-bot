@@ -25,7 +25,7 @@ async def on_language_selected(
     session: AsyncSession,
     user: User,
 ) -> None:
-    lang_code = callback.data.split(":")[1]
+    lang_code = callback.data.split(":", maxsplit=1)[1] if callback.data else ""
     if lang_code not in LANGUAGES:
         await callback.answer("Unknown language")
         return
@@ -33,7 +33,8 @@ async def on_language_selected(
     repo = UserRepository(session)
     await repo.update_language(user, lang_code)
 
-    await callback.message.edit_text(
-        f"Language set to {LANGUAGES[lang_code]} ✓"
-    )
+    if isinstance(callback.message, Message):
+        await callback.message.edit_text(
+            f"Language set to {LANGUAGES[lang_code]}"
+        )
     await callback.answer()

@@ -1,9 +1,8 @@
 from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
 LANGUAGES = {
-    "en": "🇬🇧 English",
-    "ru": "🇷🇺 Русский",
-    "uk": "🇺🇦 Українська",
+    "en": "English",
+    "ru": "Русский",
 }
 
 
