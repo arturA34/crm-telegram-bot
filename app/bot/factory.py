@@ -6,9 +6,14 @@ from redis.asyncio import Redis
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
 
 from app.bot.error_handler import router as error_router
+from app.bot.handlers.client import router as client_router
+from app.bot.handlers.pipeline import router as pipeline_router
 from app.bot.handlers.start import router as start_router
+from app.bot.handlers.stats import router as stats_router
+from app.bot.handlers.team import router as team_router
 from app.bot.middlewares.auth import AutoRegisterMiddleware
 from app.bot.middlewares.database import DatabaseMiddleware
+from app.bot.middlewares.i18n import I18nMiddleware
 
 
 def create_bot(token: str) -> Bot:
@@ -25,14 +30,20 @@ def create_dispatcher(
     storage = RedisStorage(redis=redis)
     dp = Dispatcher(storage=storage)
 
-    # Register middleware (order matters: database first, then auth)
+    # Register middleware (order: database → auth → i18n)
     dp.message.middleware(DatabaseMiddleware(session_factory))
     dp.callback_query.middleware(DatabaseMiddleware(session_factory))
     dp.message.middleware(AutoRegisterMiddleware())
     dp.callback_query.middleware(AutoRegisterMiddleware())
+    dp.message.middleware(I18nMiddleware())
+    dp.callback_query.middleware(I18nMiddleware())
 
     # Register routers
     dp.include_router(error_router)
     dp.include_router(start_router)
+    dp.include_router(team_router)
+    dp.include_router(client_router)
+    dp.include_router(pipeline_router)
+    dp.include_router(stats_router)
 
     return dp

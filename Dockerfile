@@ -14,6 +14,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy application code
 COPY . .
 
-RUN chmod +x scripts/entrypoint.sh
+RUN sed -i 's/\r$//' scripts/entrypoint.sh && chmod +x scripts/entrypoint.sh
 
 CMD ["./scripts/entrypoint.sh"]

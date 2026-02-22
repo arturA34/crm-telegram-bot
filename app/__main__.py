@@ -6,6 +6,7 @@ from app.core.logging import setup_logging
 from app.core.redis import create_redis
 from app.core.settings import get_settings
 from app.db.session import create_engine, create_session_factory
+from app.services.reminder import start_reminder_loop
 
 logger = logging.getLogger(__name__)
 
@@ -25,11 +26,15 @@ async def main() -> None:
     bot = create_bot(settings.bot_token)
     dp = create_dispatcher(redis, session_factory)
 
+    # Start reminder background task
+    reminder_task = asyncio.create_task(start_reminder_loop(bot, session_factory))
+
     try:
         logger.info("Bot is starting polling")
         await dp.start_polling(bot)
     finally:
         logger.info("Shutting down")
+        reminder_task.cancel()
         await redis.aclose()
         await engine.dispose()
         await bot.session.close()
