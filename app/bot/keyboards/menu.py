@@ -11,3 +11,11 @@ def get_main_menu(texts: dict[str, str]) -> InlineKeyboardBuilder:
     b.button(text=texts["btn_settings"], callback_data="menu:settings")
     b.adjust(2)
     return b
+
+
+def add_main_menu_button(builder: InlineKeyboardBuilder, texts: dict[str, str]) -> None:
+    """Append a '🏠 В меню' row to any inline keyboard."""
+    row = InlineKeyboardBuilder()
+    row.button(text=texts["btn_main_menu"], callback_data="menu:main")
+    row.adjust(1)
+    builder.attach(row)

@@ -1,5 +1,6 @@
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 
+from app.bot.keyboards.menu import add_main_menu_button
 from app.core.enums import ClientStatus
 
 
@@ -14,4 +15,5 @@ def get_pipeline_keyboard(
             callback_data=f"pipeline:status:{s.value}",
         )
     b.adjust(1)
+    add_main_menu_button(b, texts)
     return b

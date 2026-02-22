@@ -5,6 +5,7 @@ from aiogram import F, Router
 from aiogram.filters import Command
 from aiogram.fsm.context import FSMContext
 from aiogram.types import CallbackQuery, Message
+from aiogram.utils.keyboard import InlineKeyboardBuilder
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.bot.keyboards.client import (
@@ -13,6 +14,7 @@ from app.bot.keyboards.client import (
     get_edit_field_keyboard,
     get_status_keyboard,
 )
+from app.bot.keyboards.menu import add_main_menu_button
 from app.bot.states.client import CreateClientStates, EditClientStates
 from app.bot.states.reminder import SetReminderStates
 from app.bot.utils.pagination import paginate_keyboard
@@ -136,11 +138,16 @@ async def _finish_create_client(
     service = ClientService(session)
     result = await service.create_client(user, data)
 
+    kb = InlineKeyboardBuilder()
+    add_main_menu_button(kb, texts)
     if result["ok"]:
         client = result["client"]
-        await message.answer(texts["client_created"].format(name=client.name))
+        await message.answer(
+            texts["client_created"].format(name=client.name),
+            reply_markup=kb.as_markup(),
+        )
     else:
-        await message.answer(texts["error"])
+        await message.answer(texts["error"], reply_markup=kb.as_markup())
 
 
 # --- Client list ---
@@ -180,7 +187,7 @@ async def _show_client_list(
     ]
 
     prefix = f"clients:{status or 'all'}"
-    kb = paginate_keyboard(items, page, result["total_pages"], prefix)
+    kb = paginate_keyboard(items, page, result["total_pages"], prefix, texts=texts)
     status_label = texts[f"status_{status}"] if status else texts["btn_my_clients"]
 
     if isinstance(callback.message, Message):
@@ -214,7 +221,7 @@ async def client_list_page(
     ]
 
     prefix = f"clients:{status_val or 'all'}"
-    kb = paginate_keyboard(items, page, result["total_pages"], prefix)
+    kb = paginate_keyboard(items, page, result["total_pages"], prefix, texts=texts)
 
     if isinstance(callback.message, Message):
         status_label = texts[f"status_{status_val}"] if status_val else texts["btn_my_clients"]
@@ -305,9 +312,12 @@ async def client_set_status(
         await callback.answer(texts[result["error"]], show_alert=True)
         return
 
+    kb = InlineKeyboardBuilder()
+    add_main_menu_button(kb, texts)
     if isinstance(callback.message, Message):
         await callback.message.edit_text(
-            texts["client_status_changed"].format(status=texts[f"status_{status}"])
+            texts["client_status_changed"].format(status=texts[f"status_{status}"]),
+            reply_markup=kb.as_markup(),
         )
     await callback.answer()
 
@@ -372,10 +382,12 @@ async def client_edit_value(
     service = ClientService(session)
     result = await service.update_client(user, client_id, {field: value})
 
+    kb = InlineKeyboardBuilder()
+    add_main_menu_button(kb, texts)
     if result["ok"]:
-        await message.answer(texts["client_updated"])
+        await message.answer(texts["client_updated"], reply_markup=kb.as_markup())
     else:
-        await message.answer(texts[result["error"]])
+        await message.answer(texts[result["error"]], reply_markup=kb.as_markup())
 
 
 # --- Delete client ---
@@ -416,11 +428,13 @@ async def client_delete_execute(
     service = ClientService(session)
     result = await service.delete_client(user, client_id)
 
+    kb = InlineKeyboardBuilder()
+    add_main_menu_button(kb, texts)
     if isinstance(callback.message, Message):
         if result["ok"]:
-            await callback.message.edit_text(texts["client_deleted"])
+            await callback.message.edit_text(texts["client_deleted"], reply_markup=kb.as_markup())
         else:
-            await callback.message.edit_text(texts[result["error"]])
+            await callback.message.edit_text(texts[result["error"]], reply_markup=kb.as_markup())
     await callback.answer()
 
 
@@ -429,8 +443,10 @@ async def client_delete_cancel(
     callback: CallbackQuery,
     texts: dict[str, str],
 ) -> None:
+    kb = InlineKeyboardBuilder()
+    add_main_menu_button(kb, texts)
     if isinstance(callback.message, Message):
-        await callback.message.edit_text(texts["cancelled"])
+        await callback.message.edit_text(texts["cancelled"], reply_markup=kb.as_markup())
     await callback.answer()
 
 
@@ -494,11 +510,14 @@ async def client_reminder_time(
     service = ClientService(session)
     result = await service.set_reminder(user, data["reminder_client_id"], reminder_at)
 
+    kb = InlineKeyboardBuilder()
+    add_main_menu_button(kb, texts)
     if result["ok"]:
         await message.answer(
             texts["reminder_set"].format(
                 datetime=reminder_at.strftime("%d.%m.%Y %H:%M")
-            )
+            ),
+            reply_markup=kb.as_markup(),
         )
     else:
-        await message.answer(texts[result["error"]])
+        await message.answer(texts[result["error"]], reply_markup=kb.as_markup())

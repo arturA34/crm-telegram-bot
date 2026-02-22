@@ -2,6 +2,7 @@ TEXTS: dict[str, str] = {
     # General
     "btn_back": "« Back",
     "btn_cancel": "Cancel",
+    "btn_main_menu": "\U0001f3e0 Main menu",
     "cancelled": "Cancelled.",
     "error": "Something went wrong. Try again.",
 

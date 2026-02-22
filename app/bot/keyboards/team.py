@@ -1,5 +1,6 @@
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 
+from app.bot.keyboards.menu import add_main_menu_button
 from app.core.enums import UserRole
 from app.db.models.user import User
 
@@ -18,15 +19,17 @@ def get_team_menu(texts: dict[str, str], user: User) -> InlineKeyboardBuilder:
             b.button(text=texts["btn_leave_team"], callback_data="team:leave")
 
     b.adjust(1)
+    add_main_menu_button(b, texts)
     return b
 
 
 def get_members_keyboard(
-    members: list[User], action: str = "team:kick"
+    members: list[User], texts: dict[str, str], action: str = "team:kick"
 ) -> InlineKeyboardBuilder:
     b = InlineKeyboardBuilder()
     for m in members:
         name = m.first_name or m.username or str(m.telegram_id)
         b.button(text=name, callback_data=f"{action}:{m.id}")
     b.adjust(1)
+    add_main_menu_button(b, texts)
     return b

@@ -1,8 +1,10 @@
 from aiogram import F, Router
 from aiogram.filters import Command
 from aiogram.types import CallbackQuery, Message
+from aiogram.utils.keyboard import InlineKeyboardBuilder
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.bot.keyboards.menu import add_main_menu_button
 from app.db.models.user import User
 from app.services.stats import StatsService
 
@@ -17,8 +19,10 @@ async def personal_stats_cb(
     texts: dict[str, str],
 ) -> None:
     text = await _build_stats_text(session, user, texts)
+    kb = InlineKeyboardBuilder()
+    add_main_menu_button(kb, texts)
     if isinstance(callback.message, Message):
-        await callback.message.edit_text(text)
+        await callback.message.edit_text(text, reply_markup=kb.as_markup())
     await callback.answer()
 
 

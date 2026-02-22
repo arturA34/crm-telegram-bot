@@ -1,10 +1,11 @@
 from aiogram import F, Router
 from aiogram.filters import CommandStart
+from aiogram.fsm.context import FSMContext
 from aiogram.types import CallbackQuery, Message
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.bot.keyboards.language import LANGUAGE_CODES, get_language_keyboard
-from app.bot.keyboards.menu import get_main_menu
+from app.bot.keyboards.menu import add_main_menu_button, get_main_menu
 from app.bot.lexicon import get_texts
 from app.db.models.user import User
 from app.db.repositories.user import UserRepository
@@ -18,6 +19,22 @@ async def cmd_start(message: Message, user: User, texts: dict[str, str]) -> None
         texts["welcome_back"].format(name=user.first_name or "there"),
         reply_markup=get_main_menu(texts).as_markup(),
     )
+
+
+@router.callback_query(F.data == "menu:main")
+async def go_main_menu(
+    callback: CallbackQuery,
+    state: FSMContext,
+    user: User,
+    texts: dict[str, str],
+) -> None:
+    await state.clear()
+    if isinstance(callback.message, Message):
+        await callback.message.edit_text(
+            texts["menu_title"],
+            reply_markup=get_main_menu(texts).as_markup(),
+        )
+    await callback.answer()
 
 
 @router.callback_query(F.data.startswith("lang:"))
@@ -50,9 +67,11 @@ async def settings_menu(
     callback: CallbackQuery,
     texts: dict[str, str],
 ) -> None:
+    kb = get_language_keyboard()
+    add_main_menu_button(kb, texts)
     if isinstance(callback.message, Message):
         await callback.message.edit_text(
             texts["settings_menu"],
-            reply_markup=get_language_keyboard().as_markup(),
+            reply_markup=kb.as_markup(),
         )
     await callback.answer()

@@ -50,7 +50,7 @@ async def pipeline_status_clients(
     ]
 
     prefix = f"clients:{status}"
-    kb = paginate_keyboard(items, 1, result["total_pages"], prefix)
+    kb = paginate_keyboard(items, 1, result["total_pages"], prefix, texts=texts)
 
     if isinstance(callback.message, Message):
         await callback.message.edit_text(

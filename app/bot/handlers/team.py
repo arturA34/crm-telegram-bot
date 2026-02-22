@@ -2,8 +2,10 @@ from aiogram import F, Router
 from aiogram.fsm.context import FSMContext
 from aiogram.fsm.state import State, StatesGroup
 from aiogram.types import CallbackQuery, Message
+from aiogram.utils.keyboard import InlineKeyboardBuilder
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.bot.keyboards.menu import add_main_menu_button
 from app.bot.keyboards.team import get_members_keyboard, get_team_menu
 from app.db.models.user import User
 from app.services.team import TeamService
@@ -67,8 +69,11 @@ async def team_create_finish(
         return
 
     team = result["team"]
+    kb = InlineKeyboardBuilder()
+    add_main_menu_button(kb, texts)
     await message.answer(
-        texts["team_created"].format(name=team.name, code=team.invite_code)
+        texts["team_created"].format(name=team.name, code=team.invite_code),
+        reply_markup=kb.as_markup(),
     )
 
 
@@ -106,7 +111,12 @@ async def team_join_finish(
         return
 
     team = result["team"]
-    await message.answer(texts["team_joined"].format(name=team.name))
+    kb = InlineKeyboardBuilder()
+    add_main_menu_button(kb, texts)
+    await message.answer(
+        texts["team_joined"].format(name=team.name),
+        reply_markup=kb.as_markup(),
+    )
 
 
 @router.callback_query(F.data == "team:leave")
@@ -119,11 +129,13 @@ async def team_leave(
     service = TeamService(session)
     result = await service.leave_team(user)
 
+    kb = InlineKeyboardBuilder()
+    add_main_menu_button(kb, texts)
     if isinstance(callback.message, Message):
         if result["ok"]:
-            await callback.message.edit_text(texts["team_left"])
+            await callback.message.edit_text(texts["team_left"], reply_markup=kb.as_markup())
         else:
-            await callback.message.edit_text(texts[result["error"]])
+            await callback.message.edit_text(texts[result["error"]], reply_markup=kb.as_markup())
     await callback.answer()
 
 
@@ -138,8 +150,10 @@ async def team_members(
     result = await service.get_team_info(user)
 
     if not result["ok"]:
+        kb = InlineKeyboardBuilder()
+        add_main_menu_button(kb, texts)
         if isinstance(callback.message, Message):
-            await callback.message.edit_text(texts[result["error"]])
+            await callback.message.edit_text(texts[result["error"]], reply_markup=kb.as_markup())
         await callback.answer()
         return
 
@@ -153,8 +167,10 @@ async def team_members(
         name=team.name, members="\n".join(member_lines)
     )
 
+    kb = InlineKeyboardBuilder()
+    add_main_menu_button(kb, texts)
     if isinstance(callback.message, Message):
-        await callback.message.edit_text(text)
+        await callback.message.edit_text(text, reply_markup=kb.as_markup())
     await callback.answer()
 
 
@@ -184,7 +200,7 @@ async def team_remove_select(
     if isinstance(callback.message, Message):
         await callback.message.edit_text(
             texts["team_select_member"],
-            reply_markup=get_members_keyboard(members).as_markup(),
+            reply_markup=get_members_keyboard(members, texts).as_markup(),
         )
     await callback.answer()
 
@@ -200,9 +216,11 @@ async def team_kick_member(
     service = TeamService(session)
     result = await service.remove_member(user, member_id)
 
+    kb = InlineKeyboardBuilder()
+    add_main_menu_button(kb, texts)
     if isinstance(callback.message, Message):
         if result["ok"]:
-            await callback.message.edit_text(texts["team_member_removed"])
+            await callback.message.edit_text(texts["team_member_removed"], reply_markup=kb.as_markup())
         else:
-            await callback.message.edit_text(texts[result["error"]])
+            await callback.message.edit_text(texts[result["error"]], reply_markup=kb.as_markup())
     await callback.answer()

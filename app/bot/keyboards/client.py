@@ -1,5 +1,6 @@
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 
+from app.bot.keyboards.menu import add_main_menu_button
 from app.core.enums import ClientStatus
 
 
@@ -10,6 +11,7 @@ def get_client_actions(texts: dict[str, str], client_id: int) -> InlineKeyboardB
     b.button(text=texts["btn_set_reminder"], callback_data=f"client:reminder:{client_id}")
     b.button(text=texts["btn_delete_client"], callback_data=f"client:delete:{client_id}")
     b.adjust(2)
+    add_main_menu_button(b, texts)
     return b
 
 
@@ -21,6 +23,7 @@ def get_status_keyboard(texts: dict[str, str], client_id: int) -> InlineKeyboard
             callback_data=f"client:setstatus:{client_id}:{s.value}",
         )
     b.adjust(1)
+    add_main_menu_button(b, texts)
     return b
 
 
@@ -31,6 +34,7 @@ def get_edit_field_keyboard(texts: dict[str, str], client_id: int) -> InlineKeyb
     b.button(text=texts["btn_edit_source"], callback_data=f"client:editfield:{client_id}:source")
     b.button(text=texts["btn_edit_budget"], callback_data=f"client:editfield:{client_id}:budget")
     b.adjust(2)
+    add_main_menu_button(b, texts)
     return b
 
 
@@ -41,4 +45,5 @@ def get_confirm_delete_keyboard(
     b.button(text=texts["btn_confirm_yes"], callback_data=f"client:confirmdelete:{client_id}")
     b.button(text=texts["btn_confirm_no"], callback_data="client:canceldelete")
     b.adjust(2)
+    add_main_menu_button(b, texts)
     return b
