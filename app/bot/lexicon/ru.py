@@ -1,0 +1,122 @@
+TEXTS: dict[str, str] = {
+    # General
+    "btn_back": "\u00ab \u041d\u0430\u0437\u0430\u0434",
+    "btn_cancel": "\u041e\u0442\u043c\u0435\u043d\u0430",
+    "cancelled": "\u041e\u0442\u043c\u0435\u043d\u0435\u043d\u043e.",
+    "error": "\u0427\u0442\u043e-\u0442\u043e \u043f\u043e\u0448\u043b\u043e \u043d\u0435 \u0442\u0430\u043a. \u041f\u043e\u043f\u0440\u043e\u0431\u0443\u0439\u0442\u0435 \u0435\u0449\u0451.",
+
+    # Main menu
+    "menu_title": "\u0412\u044b\u0431\u0435\u0440\u0438\u0442\u0435 \u0434\u0435\u0439\u0441\u0442\u0432\u0438\u0435:",
+    "btn_my_clients": "\U0001f4cb \u041a\u043b\u0438\u0435\u043d\u0442\u044b",
+    "btn_add_client": "\u2795 \u041d\u043e\u0432\u044b\u0439 \u043a\u043b\u0438\u0435\u043d\u0442",
+    "btn_pipeline": "\U0001f4ca \u0412\u043e\u0440\u043e\u043d\u043a\u0430",
+    "btn_stats": "\U0001f4c8 \u0421\u0442\u0430\u0442\u0438\u0441\u0442\u0438\u043a\u0430",
+    "btn_team": "\U0001f465 \u041a\u043e\u043c\u0430\u043d\u0434\u0430",
+    "btn_settings": "\u2699\ufe0f \u041d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0438",
+
+    # Start
+    "welcome": "\u041f\u0440\u0438\u0432\u0435\u0442, <b>{name}</b>! \u0412\u044b\u0431\u0435\u0440\u0438\u0442\u0435 \u044f\u0437\u044b\u043a:",
+    "welcome_back": "\u041f\u0440\u0438\u0432\u0435\u0442, <b>{name}</b>!",
+    "language_set": "\u2705 \u0420\u0443\u0441\u0441\u043a\u0438\u0439 \u0432\u044b\u0431\u0440\u0430\u043d.",
+
+    # Team
+    "team_menu": "\U0001f465 <b>\u041a\u043e\u043c\u0430\u043d\u0434\u0430</b>",
+    "btn_create_team": "\u2795 \u0421\u043e\u0437\u0434\u0430\u0442\u044c",
+    "btn_join_team": "\U0001f517 \u0412\u0441\u0442\u0443\u043f\u0438\u0442\u044c",
+    "btn_leave_team": "\U0001f6aa \u041f\u043e\u043a\u0438\u043d\u0443\u0442\u044c",
+    "btn_members": "\U0001f4cb \u0423\u0447\u0430\u0441\u0442\u043d\u0438\u043a\u0438",
+    "btn_remove_member": "\u274c \u0423\u0434\u0430\u043b\u0438\u0442\u044c",
+    "team_enter_name": "\u041d\u0430\u0437\u0432\u0430\u043d\u0438\u0435:",
+    "team_created": "\u2705 <b>{name}</b> \u0441\u043e\u0437\u0434\u0430\u043d\u0430\n\u041a\u043e\u0434: <code>{code}</code>",
+    "team_enter_code": "\u041a\u043e\u0434 \u043f\u0440\u0438\u0433\u043b\u0430\u0448\u0435\u043d\u0438\u044f:",
+    "team_joined": "\u2705 \u0412\u044b \u0432 \u043a\u043e\u043c\u0430\u043d\u0434\u0435 <b>{name}</b>",
+    "team_left": "\u2705 \u0412\u044b \u043f\u043e\u043a\u0438\u043d\u0443\u043b\u0438 \u043a\u043e\u043c\u0430\u043d\u0434\u0443.",
+    "team_invalid_code": "\u274c \u041d\u0435\u0432\u0435\u0440\u043d\u044b\u0439 \u043a\u043e\u0434.",
+    "team_already_in": "\u0412\u044b \u0443\u0436\u0435 \u0432 \u043a\u043e\u043c\u0430\u043d\u0434\u0435. \u0421\u043d\u0430\u0447\u0430\u043b\u0430 \u043f\u043e\u043a\u0438\u043d\u044c\u0442\u0435.",
+    "team_not_in": "\u0412\u044b \u043d\u0435 \u0432 \u043a\u043e\u043c\u0430\u043d\u0434\u0435.",
+    "team_owner_cant_leave": "\u0412\u043b\u0430\u0434\u0435\u043b\u0435\u0446 \u043d\u0435 \u043c\u043e\u0436\u0435\u0442 \u0443\u0439\u0442\u0438. \u0423\u0434\u0430\u043b\u0438\u0442\u0435 \u043a\u043e\u043c\u0430\u043d\u0434\u0443.",
+    "team_members_list": "\U0001f465 <b>{name}</b>\n{members}",
+    "team_member_removed": "\u2705 \u0423\u0447\u0430\u0441\u0442\u043d\u0438\u043a \u0443\u0434\u0430\u043b\u0451\u043d.",
+    "team_member_not_found": "\u0423\u0447\u0430\u0441\u0442\u043d\u0438\u043a \u043d\u0435 \u043d\u0430\u0439\u0434\u0435\u043d.",
+    "team_select_member": "\u0412\u044b\u0431\u0435\u0440\u0438\u0442\u0435 \u0443\u0447\u0430\u0441\u0442\u043d\u0438\u043a\u0430:",
+    "team_no_members": "\u041d\u0435\u0442 \u0434\u0440\u0443\u0433\u0438\u0445 \u0443\u0447\u0430\u0441\u0442\u043d\u0438\u043a\u043e\u0432.",
+    "team_info": "<b>{name}</b>\n\u0420\u043e\u043b\u044c: {role} \u00b7 \u0423\u0447\u0430\u0441\u0442\u043d\u0438\u043a\u043e\u0432: {count}",
+
+    # Client
+    "client_enter_name": "\u0418\u043c\u044f \u043a\u043b\u0438\u0435\u043d\u0442\u0430:",
+    "client_enter_phone": "\u0422\u0435\u043b\u0435\u0444\u043e\u043d (/skip):",
+    "client_enter_source": "\u0418\u0441\u0442\u043e\u0447\u043d\u0438\u043a (/skip):",
+    "client_enter_budget": "\u0411\u044e\u0434\u0436\u0435\u0442 (/skip):",
+    "client_created": "\u2705 <b>{name}</b> \u0434\u043e\u0431\u0430\u0432\u043b\u0435\u043d",
+    "client_invalid_budget": "\u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u0447\u0438\u0441\u043b\u043e \u0438\u043b\u0438 /skip:",
+    "client_detail": (
+        "<b>{name}</b>\n"
+        "\U0001f4de {phone}  \u00b7  \U0001f4cd {source}\n"
+        "\U0001f4b0 {budget}  \u00b7  {status}\n"
+        "\U0001f464 {manager}  \u00b7  \U0001f514 {reminder}\n"
+        "<i>{created}</i>"
+    ),
+    "client_updated": "\u2705 \u041e\u0431\u043d\u043e\u0432\u043b\u0435\u043d\u043e.",
+    "client_deleted": "\u2705 \u0423\u0434\u0430\u043b\u0435\u043d\u043e.",
+    "client_not_found": "\u041a\u043b\u0438\u0435\u043d\u0442 \u043d\u0435 \u043d\u0430\u0439\u0434\u0435\u043d.",
+    "client_access_denied": "\u0414\u043e\u0441\u0442\u0443\u043f \u0437\u0430\u043f\u0440\u0435\u0449\u0451\u043d.",
+    "btn_edit_client": "\u270f\ufe0f \u0420\u0435\u0434.",
+    "btn_delete_client": "\U0001f5d1 \u0423\u0434\u0430\u043b\u0438\u0442\u044c",
+    "btn_change_status": "\U0001f504 \u0421\u0442\u0430\u0442\u0443\u0441",
+    "btn_set_reminder": "\U0001f514 \u041d\u0430\u043f\u043e\u043c\u043d\u0438\u0442\u044c",
+    "client_select_field": "\u0420\u0435\u0434\u0430\u043a\u0442\u0438\u0440\u043e\u0432\u0430\u0442\u044c:",
+    "btn_edit_name": "\u0418\u043c\u044f",
+    "btn_edit_phone": "\u0422\u0435\u043b\u0435\u0444\u043e\u043d",
+    "btn_edit_source": "\u0418\u0441\u0442\u043e\u0447\u043d\u0438\u043a",
+    "btn_edit_budget": "\u0411\u044e\u0434\u0436\u0435\u0442",
+    "client_enter_new_value": "\u041d\u043e\u0432\u043e\u0435 \u0437\u043d\u0430\u0447\u0435\u043d\u0438\u0435:",
+    "client_confirm_delete": "\u0423\u0434\u0430\u043b\u0438\u0442\u044c <b>{name}</b>?",
+    "btn_confirm_yes": "\u2705 \u0414\u0430",
+    "btn_confirm_no": "\u274c \u041d\u0435\u0442",
+    "client_select_status": "\u041d\u043e\u0432\u044b\u0439 \u0441\u0442\u0430\u0442\u0443\u0441:",
+    "client_status_changed": "\u0421\u0442\u0430\u0442\u0443\u0441 \u2192 <b>{status}</b>",
+    "client_list_empty": "\u041a\u043b\u0438\u0435\u043d\u0442\u043e\u0432 \u043d\u0435\u0442.",
+    "client_list_title": "<b>{status}</b>",
+
+    # Pipeline
+    "pipeline_title": "\U0001f4ca <b>\u0412\u043e\u0440\u043e\u043d\u043a\u0430</b>",
+
+    # Stats
+    "stats_title": "\U0001f4c8 <b>\u0421\u0442\u0430\u0442\u0438\u0441\u0442\u0438\u043a\u0430</b>",
+    "stats_total": "\u0412\u0441\u0435\u0433\u043e: {total}",
+    "stats_won": "\u2705 \u0412\u044b\u0438\u0433\u0440\u0430\u043d\u043e: {won}",
+    "stats_lost": "\u274c \u041f\u0440\u043e\u0438\u0433\u0440\u0430\u043d\u043e: {lost}",
+    "stats_in_progress": "\u23f3 \u0410\u043a\u0442\u0438\u0432\u043d\u044b\u0435: {in_progress}",
+    "stats_revenue": "\U0001f4b0 \u0414\u043e\u0445\u043e\u0434: {revenue}",
+    "stats_conversion": "\U0001f3af \u041a\u043e\u043d\u0432\u0435\u0440\u0441\u0438\u044f: {conversion}%",
+    "leaderboard_title": "\U0001f3c6 <b>\u0420\u0435\u0439\u0442\u0438\u043d\u0433</b>",
+    "leaderboard_line": "{rank}. {name} \u2014 {score} \u0431.",
+    "leaderboard_no_team": "\u0412\u0441\u0442\u0443\u043f\u0438\u0442\u0435 \u0432 \u043a\u043e\u043c\u0430\u043d\u0434\u0443, \u0447\u0442\u043e\u0431\u044b \u0432\u0438\u0434\u0435\u0442\u044c \u0440\u0435\u0439\u0442\u0438\u043d\u0433.",
+
+    # Reminder
+    "reminder_enter_date": "\u0414\u0430\u0442\u0430 (\u0414\u0414.\u041c\u041c.\u0413\u0413\u0413\u0413):",
+    "reminder_enter_time": "\u0412\u0440\u0435\u043c\u044f (\u0427\u0427:\u041c\u041c):",
+    "reminder_set": "\U0001f514 \u041d\u0430\u043f\u043e\u043c\u0438\u043d\u0430\u043d\u0438\u0435: {datetime}",
+    "reminder_invalid_date": "\u041d\u0435\u0432\u0435\u0440\u043d\u0430\u044f \u0434\u0430\u0442\u0430. \u0414\u0414.\u041c\u041c.\u0413\u0413\u0413\u0413:",
+    "reminder_invalid_time": "\u041d\u0435\u0432\u0435\u0440\u043d\u043e\u0435 \u0432\u0440\u0435\u043c\u044f. \u0427\u0427:\u041c\u041c:",
+    "reminder_notification": (
+        "\U0001f514 <b>{name}</b>\n"
+        "{status} \u00b7 {phone}"
+    ),
+    "reminder_none": "\u2014",
+
+    # Status labels
+    "status_NEW": "\U0001f7e2 \u041d\u043e\u0432\u044b\u0439",
+    "status_IN_PROGRESS": "\U0001f7e1 \u0412 \u0440\u0430\u0431\u043e\u0442\u0435",
+    "status_PROPOSAL_SENT": "\U0001f7e0 \u041a\u041f \u043e\u0442\u043f\u0440\u0430\u0432\u043b\u0435\u043d\u043e",
+    "status_WON": "\u2705 \u0412\u044b\u0438\u0433\u0440\u0430\u043d",
+    "status_LOST": "\u274c \u041f\u0440\u043e\u0438\u0433\u0440\u0430\u043d",
+
+    # Role labels
+    "role_SOLO": "\u0421\u043e\u043b\u043e",
+    "role_OWNER": "\u0412\u043b\u0430\u0434\u0435\u043b\u0435\u0446",
+    "role_MANAGER": "\u041c\u0435\u043d\u0435\u0434\u0436\u0435\u0440",
+
+    # Settings
+    "settings_menu": "\u2699\ufe0f <b>\u041d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0438</b>",
+}
